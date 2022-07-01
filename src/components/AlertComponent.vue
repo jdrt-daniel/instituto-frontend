@@ -9,32 +9,28 @@
               @click="$emit('update:show', false)">
               <span aria-hidden="true">&times;</span>
             </button>
-            <div v-if="type == 'alta'">
+            <div v-if="type">
               <i class="fe fe-check-circle tx-100 text-success lh-1 mg-t-20 d-inline-block"></i>
               <h4 class="text-success">Habilitar registro</h4>
               <p class="mg-b-20 mg-x-20">
                 Este registro de habilitará nuevamente.
               </p>
-              <button class="btn btn-success pd-x-25 mx-1" type="button">
-                Si, habilitar
-              </button>
-              <button class="btn btn-secondary pd-x-25 mx-1" type="button" @click="$emit('update:show', 'closeModal')">
-                Cancelar
-              </button>
             </div>
             <div v-else>
               <i class="fa fa-times-circle tx-100 tx-danger lh-1 mg-t-20 d-inline-block"></i>
               <h4 class="tx-danger mg-b-20">Inhabilitar registro!</h4>
               <p class="mg-b-20 mg-x-20">
-                Este registro se inhabilitará {{ id }}
+                Este registro se inhabilitará
               </p>
-              <button class="btn btn-danger pd-x-25 mx-1" type="button">
-                Si, inhabilitar
-              </button>
-              <button class="btn btn-secondary pd-x-25 mx-1" type="button" @click="$emit('update:show', false)">
-                Cancelar
-              </button>
             </div>
+            <button class="btn pd-x-25 mx-1" :class="type ? 'btn-success' : 'btn-danger'" type="button"
+              @click="$emit('submit-alert', 'onChangeStatus')"
+              v-text="type ? 'Si, habilitar registro' : 'Si, inhabilitar registro'">
+
+            </button>
+            <button class="btn btn-secondary pd-x-25 mx-1" type="button" @click="$emit('update:show', 'closeModal')">
+              Cancelar
+            </button>
           </div>
         </div>
       </div>
@@ -43,8 +39,8 @@
 </template>
 
 <script setup>
-defineProps(["title", "show", 'type', 'id']);
-defineEmits(["update:show"]);
+defineProps(["title", "show", 'type']);
+defineEmits(["update:show", 'submit-alert']);
 </script>
 
 <style scoped>

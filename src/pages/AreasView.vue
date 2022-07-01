@@ -1,12 +1,18 @@
 <template>
   <div>
-    <ModuleComponent titleModule="Hola mundo" @open-modal="openModal" v-model:search="search"
+    <ModuleComponent titleModule="lista de areas" @open-modal="openModal" v-model:search="search"
       @update:search="(newValue) => (search = newValue)">
+      <div v-if="loading" class="loader-container">
+        <img src="/src/assets/img/loader-2.svg" class="loader-img" alt="Loader" />
+      </div>
       <div class="card-body px-3 py-2">
         <div class="table-responsive">
-          <table class="table table-hover text-nowrap table-sm" style="width: 100%; min-height: 50px">
+          <table class="table table-hover text-nowrap table-sm" style="width: 100%; min-height: 50px"
+            :style="loading ? 'height:500px' : ''">
+
             <thead>
               <tr class="bold">
+                <th class="border-bottom-0" style="width: 20px">#</th>
                 <th class="border-bottom-0">Area de estudio</th>
                 <th class="border-bottom-0" style="width: 40px">estado</th>
                 <th class="text-right border-bottom-0" style="width: 100px">
@@ -15,15 +21,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-if="loading" style="height: 200px">
-                <td colspan="3">
-                  <div class="text-center">
-                    <span class="spinner-border spinner-border-xl" role="status"></span>
-                    <!-- <strong class="ml-2"> Cargando ... </strong> -->
-                  </div>
+
+              <tr v-for="({ area_id, nombre, estado }, index) in listFiltered" :key="index">
+                <td>
+                  {{ index + 1 }}
                 </td>
-              </tr>
-              <tr v-for="({ area_id, nombre, estado }, index) in listFilter" :key="index">
                 <td class="">
                   {{ nombre }}
                 </td>
@@ -38,8 +40,8 @@
                   </button>
                   <button class="btn btn-sm mx-1" :class="estado ? 'btn-danger' : 'btn-success'" @click="
                     estado
-                      ? disabled(index, area_id)
-                      : enabled(index, area_id)
+                      ? openAlert(index, area_id, false)
+                      : openAlert(index, area_id, true)
                   ">
                     <i class="fe fe-arrow-down" :class="estado ? 'fe-arrow-down' : 'fe-arrow-up'"></i>
                   </button>
@@ -50,8 +52,9 @@
         </div>
       </div>
     </ModuleComponent>
-    <ModalAdd title="Adicionar Area" :show="open" @update:show="closeModal">
-      <Form @submit="saveData" :validation-schema="schema" v-slot="{ errors }">
+    <ModalAdd :title="data.id ? 'MODIFICAR AREA' : 'AGREGAR AREA'" :show="open" @update:show="closeModal">
+      <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }">
+        <Field type="hidden" name="id" v-model="data.id" />
         <div class="form-group">
           <label>Nombre del area</label>
           <Field name="nombre" type="text" class="form-control" :class="errors.nombre ? 'parsley-error' : ''"
@@ -61,39 +64,42 @@
           </div>
         </div>
         <div class="form-group text-center">
-          <button class="btn btn-primary mr-2" type="submit">Guardar</button>
+          <button class="btn btn-primary mr-2" type="submit" v-text="data.id ? 'Modificar' : 'Guardar'"></button>
           <button class="btn btn-secondary" @click="closeModal()" type="button">Cancelar</button>
         </div>
       </Form>
     </ModalAdd>
-    <Alert :show="openAlert.open" :type="openAlert.type" :id="openAlert.id" @update:show="closeModal"></Alert>
+    <Alert :show="open_a.open" :type="open_a.type" @update:show="closeModal" @submit-alert="onChangeStatus"></Alert>
   </div>
 </template>
 
 <script setup>
 import { Form, Field } from "vee-validate";
-import { onMounted } from "vue";
 import { areaComposable, areaServices } from "../composables";
 
 const {
-  list,
   data,
   open,
-  openAlert,
-  listFilter,
+  open_a,
+  listFiltered,
   search,
   loading,
   schema,
-  disabled,
-  enabled,
   openModal,
+  openAlert,
   closeModal,
-} = areaComposable();
-const { getList, saveData } = areaServices();
+  onSubmit,
+  onChangeStatus
+} = areaComposable(areaServices);
 
-onMounted(async () => {
-  loading.value = true;
-  list.value = await getList();
-  loading.value = false;
-});
+
 </script>
+
+<style scoped>
+.loader-container {
+  position: absolute;
+  width: 100%;
+  height: calc(100% - 60px);
+  background-color: #ffffffb4;
+}
+</style>

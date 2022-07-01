@@ -2,7 +2,6 @@
   <transition enter-active-class="animate__animated animate__zoomIn"
     leave-active-class="animate__animated animate__zoomOut">
     <div class="modal" :class="show ? 'show' : ''" v-if="show">
-      >
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content modal-content-demo">
           <div class="modal-header">
