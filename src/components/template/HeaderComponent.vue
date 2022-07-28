@@ -113,6 +113,6 @@
 </template>
 <script setup>
 import { ref } from 'vue';
-import { loginComposable } from '../../composables';
-const { onLogout,user } = loginComposable();
+import { useLogin } from '../../composables';
+const { onLogout, user } = useLogin();
 </script>

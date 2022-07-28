@@ -5,7 +5,7 @@ import { Toast } from "../helpers/toast";
 
 import { loginStore } from "../stores";
 
-export const loginComposable = () => {
+export const useLogin = () => {
   /** Schema validation  */
   const schema = Yup.object().shape({
     login: Yup.string().required("El usuario es requerido."),
@@ -40,8 +40,11 @@ export const loginComposable = () => {
         router.push("/");
       }, 1000);
     } catch (error) {
+      console.log(error);
       Toast(
-        `<strong>Falló!</strong><span> Intente de nuevo, porfavor </span>`,
+        `<strong> ${
+          error.response.data.message ?? error.message
+        } </strong><span> Intente de nuevo, porfavor </span>`,
         "error",
         1500
       );

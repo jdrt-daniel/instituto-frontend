@@ -30,21 +30,21 @@
               </div>
               <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }">
                 <div class="form-group">
-                  <label>Matricula</label>
+                  <label>Matricula <span class="text-danger">*</span> </label>
                   <Field name="login" type="text" class="form-control"
-                    :class=" errors.login || invalid ? 'parsley-error': success? 'parsley-success':''"
+                    :class="errors.login || invalid ? 'parsley-error' : success ? 'parsley-success' : ''"
                     placeholder="Ingrese su matricula" v-model="login" />
                   <div class="parsley-errors-list">
-                    {{errors.login}}
+                    {{ errors.login }}
                   </div>
                 </div>
                 <div class="form-group">
-                  <label>Contraseña</label>
+                  <label>Contraseña <span class="text-danger">*</span></label>
                   <Field name="password" type="password" class="form-control"
-                    :class="errors.password || invalid ? 'parsley-error': success? 'parsley-success':''"
+                    :class="errors.password || invalid ? 'parsley-error' : success ? 'parsley-success' : ''"
                     placeholder="Ingrese su contraseña" v-model="password" />
                   <div class="parsley-errors-list">
-                    {{errors.password}}
+                    {{ errors.password }}
                   </div>
                 </div>
                 <button class="btn btn-main-primary btn-block" type="submit" :disabled="loading">
@@ -66,10 +66,10 @@
 <script setup>
 import { Form, Field } from "vee-validate";
 
-import { loginComposable } from '../composables'
+import { useLogin } from '../composables'
 
-const { login, password, schema, invalid, success, loading, onSubmit } = loginComposable()
- 
+const { login, password, schema, invalid, success, loading, onSubmit } = useLogin()
+
 </script>
 
 <style lang="scss" scoped>

@@ -20,7 +20,9 @@ export const loginStore = defineStore("loginStore", {
         throw error;
       }
     },
-    logOut() {
+    async logOut() {
+      const { data } = await api.post("/logout");
+      console.log(data);
       this.token = "";
       this.user = "";
       localStorage.removeItem("token");

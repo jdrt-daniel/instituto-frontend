@@ -7,19 +7,10 @@
             <h3 class="card-title">{{ titleModule }}</h3>
 
             <div class="card-options float-left">
-              <div class="main-header-search mt-0 d-inline-block mr-3">
-                <input
-                  class="form-control shadow"
-                  placeholder="Buscar..."
-                  type="text"
-                  :value="search"
-                  @input="$emit('update:search', $event.target.value)"
-                />
-                <button
-                  class="btn"
-                  v-if="search"
-                  @click="$emit('update:search', '')"
-                >
+              <div class="main-header-search mt-0 d-md-inline-block d-none mr-3">
+                <input class="form-control shadow" placeholder="Buscar..." type="text" :value="search"
+                  @input="$emit('update:search', $event.target.value)" />
+                <button class="btn" v-if="search" @click="$emit('update:search', '')">
                   <i class="fas fa-times d-none d-md-block text-danger"></i>
                 </button>
                 <button class="btn" v-else>
@@ -55,4 +46,5 @@ defineProps({
 defineEmits(["openModal", "update:search"]);
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>

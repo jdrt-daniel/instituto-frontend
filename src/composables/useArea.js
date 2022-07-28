@@ -3,7 +3,7 @@ import { Toast } from "../helpers/toast";
 import * as Yup from "yup";
 import axios from "../axios";
 
-export const areaComposable = (areaServices) => {
+export const useArea = (areaServices) => {
   const { listData, saveData, getData, updateData, changeStatus } =
     areaServices();
 
@@ -15,13 +15,13 @@ export const areaComposable = (areaServices) => {
 
   const list = ref([]);
   const search = ref("");
+  const loading = ref(false);
 
   const data = ref({
     id: "",
     nombre: "",
   });
 
-  const loading = ref(false);
   const open = ref(false);
   const open_a = ref({
     type: true,
@@ -35,12 +35,14 @@ export const areaComposable = (areaServices) => {
     onLists();
   });
 
+  /** Lista filtrada */
   const listFiltered = computed(() => {
     return list.value.filter(
       (el) => el.nombre.toLowerCase().indexOf(search.value.toLowerCase()) > -1
     );
   });
 
+  /** metodos crud  */
   const onLists = async () => {
     loading.value = true;
     list.value = [];
@@ -91,22 +93,21 @@ export const areaComposable = (areaServices) => {
   };
 
   const onChangeStatus = async () => {
-    console.log("entro a dar stado         ");
-    console.log(open_a.value);
+    loading.value = true;
     try {
       const res = await changeStatus(open_a.value.id);
-      console.log(res);
       open_a.value.type
         ? Toast(`Se habilitó correctamente`, "success", 1500)
         : Toast(`Se inhabilitó correctamente`, "warning", 1500);
       closeModal();
+      onLists();
     } catch (error) {
       Toast(`Ocurrio un error ${error}`, "error", 1500);
-    } finally {
-      onLists();
     }
+    loading.value = false;
   };
 
+  /**  Abrir y cerrar modal y alerta  */
   const openAlert = (i, obj, type) => {
     open_a.value = {
       open: true,

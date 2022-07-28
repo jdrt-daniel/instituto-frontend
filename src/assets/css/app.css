@@ -1,0 +1,11 @@
+.loader-container {
+    position: absolute;
+    width: 100%;
+    height: calc(100% - 60px);
+    background-color: #ffffff;
+}
+
+.loader-container.loader-img {
+    top: 30% !important;
+}
+

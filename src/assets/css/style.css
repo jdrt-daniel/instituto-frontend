@@ -3808,7 +3808,6 @@ input[type="submit"].btn-block {
     word-wrap: break-word;
     background: #fff !important;
     background-clip: border-box;
-    border-radius: 10px;
     border: 0 solid #edeef7 !important;
     margin-bottom: 1.3rem;
     box-shadow: 0 5px 15px 5px rgba(80, 102, 224, 0.08);

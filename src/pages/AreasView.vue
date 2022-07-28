@@ -7,8 +7,8 @@
       </div>
       <div class="card-body px-3 py-2">
         <div class="table-responsive">
-          <table class="table table-hover text-nowrap table-sm" style="width: 100%; min-height: 50px"
-            :style="loading ? 'height:500px' : ''">
+          <table class="table table-hover text-nowrap table-sm mb-0" style="width: 100%; min-height: 50px"
+            :style="loading ? 'height:400px' : ''">
 
             <thead>
               <tr class="bold">
@@ -47,16 +47,18 @@
                   </button>
                 </td>
               </tr>
+
             </tbody>
           </table>
         </div>
       </div>
     </ModuleComponent>
-    <ModalAdd :title="data.id ? 'MODIFICAR AREA' : 'AGREGAR AREA'" :show="open" @update:show="closeModal">
+    <Modal :title="data.id ? 'MODIFICAR AREA' : 'AGREGAR AREA'" :show="open" @update:show="closeModal"
+      :loading="loading">
       <Form @submit="onSubmit" :validation-schema="schema" v-slot="{ errors }">
         <Field type="hidden" name="id" v-model="data.id" />
         <div class="form-group">
-          <label>Nombre del area</label>
+          <label>Nombre del area <span class="text-danger">*</span></label>
           <Field name="nombre" type="text" class="form-control" :class="errors.nombre ? 'parsley-error' : ''"
             placeholder="Ingrese el nombre del area" v-model="data.nombre" />
           <div class="parsley-errors-list">
@@ -68,15 +70,15 @@
           <button class="btn btn-secondary" @click="closeModal()" type="button">Cancelar</button>
         </div>
       </Form>
-    </ModalAdd>
-    <Alert :show="open_a.open" :type="open_a.type" @update:show="closeModal" @submit-alert="onChangeStatus"></Alert>
+    </Modal>
+    <Alert :show="open_a.open" :type="open_a.type" @update:show="closeModal" @submit-alert="onChangeStatus"
+      :loading="loading"></Alert>
   </div>
 </template>
 
 <script setup>
 import { Form, Field } from "vee-validate";
-import { areaComposable, areaServices } from "../composables";
-
+import { useArea, areaServices } from "../composables";
 const {
   data,
   open,
@@ -90,7 +92,7 @@ const {
   closeModal,
   onSubmit,
   onChangeStatus
-} = areaComposable(areaServices);
+} = useArea(areaServices);
 
 
 </script>

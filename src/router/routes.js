@@ -1,7 +1,8 @@
 export const routes = [
   {
     path: "/",
-    component: () => import("../layout/AppLayout.vue"),
+    component: () =>
+      import(/* webpackChunkName: "gestion" */ "../layout/AppLayout.vue"),
     meta: {
       requireAuth: true,
       nameLabel: "Home",
@@ -10,13 +11,17 @@ export const routes = [
       {
         path: "/",
         name: "home",
-        component: () => import("../pages/DashboardView.vue"),
+        component: () =>
+          import(
+            /* webpackChunkName: "gestion" */ "../pages/DashboardView.vue"
+          ),
       },
     ],
   },
   {
     path: "/carrera",
-    component: () => import("../layout/AppLayout.vue"),
+    component: () =>
+      import(/* webpackChunkName: "gestion" */ "../layout/AppLayout.vue"),
     meta: {
       requireAuth: true,
       nameLabel: "Carrera",
@@ -25,28 +30,42 @@ export const routes = [
       {
         path: "",
         name: "carrera",
-        component: () => import("../pages/CarrerasView.vue"),
+        component: () =>
+          import(/* webpackChunkName: "gestion" */ "../pages/CarrerasView.vue"),
       },
     ],
   },
   {
     path: "/materia",
-    component: () => import("../layout/AppLayout.vue"),
+    component: () =>
+      import(/* webpackChunkName: "gestion" */ "../layout/AppLayout.vue"),
     meta: {
       requireAuth: true,
-      nameLabel: "Carrera",
+      nameLabel: "Materias",
     },
     children: [
       {
         path: "",
         name: "materia",
-        component: () => import("../pages/MateriasView.vue"),
+        component: () =>
+          import(
+            /* webpackChunkName: "gestion" */ "../pages/materias/CarrerasView.vue"
+          ),
+      },
+      {
+        path: ":id",
+        name: "materia-add",
+        component: () =>
+          import(
+            /* webpackChunkName: "gestion" */ "../pages/materias/MateriasView.vue"
+          ),
       },
     ],
   },
   {
     path: "/area",
-    component: () => import("../layout/AppLayout.vue"),
+    component: () =>
+      import(/* webpackChunkName: "gestion" */ "../layout/AppLayout.vue"),
     meta: {
       requireAuth: true,
       nameLabel: "Areas",
@@ -55,7 +74,42 @@ export const routes = [
       {
         path: "",
         name: "area",
-        component: () => import("../pages/AreasView.vue"),
+        component: () =>
+          import(/* webpackChunkName: "gestion" */ "../pages/AreasView.vue"),
+      },
+    ],
+  },
+  {
+    path: "/grupo",
+    component: () =>
+      import(/* webpackChunkName: "gestion" */ "../layout/AppLayout.vue"),
+    meta: {
+      requireAuth: true,
+      nameLabel: "Grupos",
+    },
+    children: [
+      {
+        path: "",
+        name: "grupo",
+        component: () =>
+          import(/* webpackChunkName: "gestion" */ "../pages/AreasView.vue"),
+      },
+    ],
+  },
+  {
+    path: "/plan_estudios",
+    component: () =>
+      import(/* webpackChunkName: "gestion" */ "../layout/AppLayout.vue"),
+    meta: {
+      requireAuth: true,
+      nameLabel: "Plan de Estudios",
+    },
+    children: [
+      {
+        path: "",
+        name: "plan_estudios",
+        component: () =>
+          import(/* webpackChunkName: "gestion" */ "../pages/PlanView.vue"),
       },
     ],
   },
@@ -66,6 +120,7 @@ export const routes = [
       requireAuth: false,
       nameLabel: "Login",
     },
-    component: () => import("../pages/LoginView.vue"),
+    component: () =>
+      import(/* webpackChunkName: "gestion" */ "../pages/LoginView.vue"),
   },
 ];

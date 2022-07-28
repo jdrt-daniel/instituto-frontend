@@ -5,9 +5,3 @@ export const templateStore = defineStore("template", {
   state: () => ({}),
   actions: {},
 });
-
-export const routeStore = defineStore("route", {
-  state: () => ({
-    routeName: useRoute().meta.nameLabel,
-  }),
-});

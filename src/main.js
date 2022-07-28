@@ -16,7 +16,7 @@ import "bootstrap";
 
 createApp(App)
   .component("ModuleComponent", ModuleComponent)
-  .component("ModalAdd", ModalComponent)
+  .component("Modal", ModalComponent)
   .component("Alert", AlertComponent)
   .use(router)
   .use(createPinia().use(piniaPluginPersistedstate))

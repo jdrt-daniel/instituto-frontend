@@ -64,7 +64,8 @@
                                 <i class="fe fe-chevron-right"></i>
                             </div>
                         </a>
-                        <a class="dropdown-item d-flex pd-y-15 border-bottom" href="javascript:void(0)" @click.prevent="onLogout">
+                        <a class="dropdown-item d-flex pd-y-15 border-bottom" href="javascript:void(0)"
+                            @click.prevent="onLogout">
                             <div class="d-flex">
                                 <i class="fas fa-sign-out-alt mr-3 tx-20 mg-t-5 text-muted"></i>
                                 <div>
@@ -155,6 +156,6 @@
     <!--/Sidebar-right-->
 </template>
 <script setup>
- import { loginComposable } from '../../composables';
- const { onLogout } = loginComposable();
+import { useLogin } from '../../composables';
+const { onLogout } = useLogin();
 </script>
